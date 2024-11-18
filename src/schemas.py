@@ -50,7 +50,7 @@ class RegistryCreate(BaseModel):
 class Student(BaseModel):
     student_id: UUID
     first_name: str
-    other_names: Optional[str] = None
+    other_names: Optional[str]
     last_name: str
     date_of_birth: date
 
