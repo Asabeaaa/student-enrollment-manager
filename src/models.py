@@ -50,7 +50,7 @@ class Student(Base):
 
     studentId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
     firstName: Mapped[str] = mapped_column(String, nullable=False)
-    otherNames: Mapped[str] = mapped_column(String, nullable=False)
+    otherNames: Mapped[str] = mapped_column(String, nullable=True)
     lastName: Mapped[str] = mapped_column(String, nullable=False)
     dateOfBirth: Mapped[date] = mapped_column(Date, nullable=False)
 
