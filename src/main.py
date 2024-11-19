@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+import uvicorn
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 import models
@@ -15,7 +16,7 @@ def index():
 
 
 @app.get("/students", dependencies=[Depends(api_key_auth)], tags=["List all students"], response_model=list[schemas.Student])
-async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)) -> list[schemas.Student]:
+async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)):
     """
     List all students
     """
@@ -27,7 +28,7 @@ async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(
 
 
 @app.get("/registry", dependencies=[Depends(api_key_auth)], tags=["View registry"], response_model=list[schemas.Student])
-async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)) -> list[schemas.Registry]:
+async def read_registry(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)):
     """
     Return student registry
     """
@@ -36,3 +37,6 @@ async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(
     if not registry:
         raise HTTPException(status_code=404, detail="Registry not found")
     return registry
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host='0.0.0.0', port=8000, reload=True)
