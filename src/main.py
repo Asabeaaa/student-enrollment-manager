@@ -16,12 +16,20 @@ def index():
 
 
 @app.get("/students", dependencies=[Depends(api_key_auth)], tags=["List all students"], response_model=list[schemas.Student])
-async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)):
+# async def read_students(offset: int = 0, limit: int = 15, db: Session = Depends(get_db)):
+#     """
+#     List all students
+#     """
+#     students = db.execute(
+#         select(models.Student).offset(offset).limit(limit)).all()
+#     if not students:
+#         raise HTTPException(status_code=404, detail="Student not found")
+#     return students
+def read_students(db: Session = Depends(get_db)):
     """
     List all students
     """
-    students = db.execute(
-        select(models.Student).offset(offset).limit(limit)).all()
+    students = db.query(models.Student).all()
     if not students:
         raise HTTPException(status_code=404, detail="Student not found")
     return students
