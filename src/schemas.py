@@ -6,7 +6,7 @@ from typing import Optional
 
 
 class RegistryStatus(str, Enum):
-    PENDING = "PRNDING"
+    PENDING = "PENDING"
     PROCESSING = "PROCESSING"
     REGISTERED = "REGISTERED"
     GRADUATED = "GRADUATED"
@@ -37,28 +37,28 @@ class Registry(BaseModel):
 
 
 class RegistryCreate(BaseModel):
+    registry_id: UUID
     student_id: UUID
     class_id: UUID
     status: RegistryStatus
-    date_created: datetime
-    last_updated: datetime
 
     class Config:
         from_attributes = True
 
 
 class Student(BaseModel):
-    student_id: Optional[UUID] = None
-    first_name: Optional[str] = None
+    student_id: UUID
+    first_name: str
     other_names: Optional[str] = None
-    last_name: Optional[str] = None
-    date_of_birth: Optional[date] = None
+    last_name: str
+    date_of_birth: date
 
     class Config:
         from_attributes = True
 
 
 class StudentCreate(BaseModel):
+    student_id: UUID
     first_name: str
     other_names: Optional[str] = None
     last_name: str
