@@ -30,7 +30,7 @@ async def get_student_by_id(student_id: UUID, db: Session = Depends(get_db)):
     return student
 
 
-@app.post("/students/register")
+@app.post("/students/onboard")
 async def register_student(student: schemas.StudentCreate, db: Session = Depends(get_db)):
     # Create a new student object using the request data
     new_student = models.Student(studentId=student.student_id, firstName=student.first_name,
@@ -51,7 +51,7 @@ async def register_student(student: schemas.StudentCreate, db: Session = Depends
         db.close()
 
 
-@app.post("/students/onboard")
+@app.post("/students/register")
 async def register_student(onboard_student: schemas.RegistryCreate, db: Session = Depends(get_db)):
     # Create a new registry object using the request data
     onboarded_student = models.Registry(registryId=onboard_student.registry_id, studentId=onboard_student.student_id,
