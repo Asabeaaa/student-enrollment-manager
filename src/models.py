@@ -1,68 +1,65 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import UUID
-from datetime import datetime, date
 from sqlalchemy import String, DateTime, Date
 from sqlalchemy.sql import func
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, UUID
 
-
-class Base(DeclarativeBase):
-    pass
+Base = declarative_base()
 
 
 class Registry(Base):
     __tablename__ = "registry"
 
-    registryId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
-    studentId: Mapped[UUID] = mapped_column(UUID, nullable=False)
-    classId: Mapped[UUID] = mapped_column(UUID, nullable=False)
-    status: Mapped[str] = mapped_column(String, nullable=False)
-    dateCreated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False)
-    lastUpdated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now())
+    registryId = Column(UUID, primary_key=True, index=True)
+    studentId = Column(UUID, nullable=False)
+    classId = Column(UUID, nullable=False)
+    status = Column(String, nullable=False, index=True)
+    dateCreated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
+    lastUpdated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
 
 
 class Class(Base):
     __tablename__ = "classes"
 
-    classId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
-    level: Mapped[str] = mapped_column(String, nullable=False)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    dateCreated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False)
-    lastUpdated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now())
+    classId = Column(UUID, primary_key=True, index=True)
+    level = Column(String, nullable=False, index=True)
+    name = Column(String, nullable=False, index=True)
+    dateCreated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
+    lastUpdated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
 
 
 class Course(Base):
     __tablename__ = "courses"
 
-    courseId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    dateCreated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False)
-    lastUpdated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now())
+    courseId = Column(UUID, primary_key=True, index=True)
+    name = Column(String, nullable=False, index=True)
+    dateCreated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
+    lastUpdated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
 
 
 class Student(Base):
     __tablename__ = "students"
 
-    studentId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
-    firstName: Mapped[str] = mapped_column(String, nullable=False)
-    otherNames: Mapped[str] = mapped_column(String, nullable=False)
-    lastName: Mapped[str] = mapped_column(String, nullable=False)
-    dateOfBirth: Mapped[date] = mapped_column(Date, nullable=False)
+    studentId = Column(UUID, primary_key=True, index=True)
+    firstName = Column(String, nullable=False)
+    otherNames = Column(String, nullable=True)
+    lastName = Column(String, nullable=False)
+    dateOfBirth = Column(Date, nullable=False)
 
 
 class StudentCourse(Base):
     __tablename__ = "student_courses"
 
-    studentCoursesId: Mapped[UUID] = mapped_column(UUID, primary_key=True)
-    studentId: Mapped[UUID] = mapped_column(UUID, nullable=False)
-    courseId: Mapped[UUID] = mapped_column(UUID, nullable=False)
-    status: Mapped[str] = mapped_column(String, nullable=False)
-    dateCreated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False)
-    lastUpdated: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now())
+    studentCoursesId = Column(UUID, primary_key=True, index=True)
+    studentId = Column(UUID, nullable=False)
+    courseId = Column(UUID, nullable=False)
+    status = Column(String, nullable=False, index=True)
+    dateCreated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
+    lastUpdated = Column(DateTime(timezone=True),
+                         nullable=False, server_default=func.now())
